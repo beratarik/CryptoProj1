@@ -1,2 +1,2 @@
 # CryptoProj1
-Project one for CS 483
+Project 1 for CS 483
