@@ -1,12 +1,17 @@
 import sys
 import binascii as ba
 from Crypto.Cipher import AES
+from Crypto import Random
 
 def main():
 
     kname = sys.argv[1]
     iname = sys.argv[2]
     oname = sys.argv[3]
+
+    blocksize = 8
+    l = []
+
     if(len(sys.argv) == 5):
         ivname = sys.argv[4]
         ivfile = open(ivname, 'r')
@@ -18,13 +23,36 @@ def main():
     message = ifile.read()
     message = message[:-1]
     #message = message.encode('utf-8')
-    print(message)
-    pad(message)
+
+    rndfile = Random.new()
+    IV = rndfile.read(8)
+    IV = ba.hexlify(IV)
+    print("IV is  " + str(IV))
+    #print("Unpadded message is " + message)
+    padded = pad(message)
+    #print("Padded message is " + padded.decode('utf-8'))
+    #print("hex mesage " + str(ba.hexlify(padded)))
+    for i in range(len(padded)):
+        if(i%blocksize == blocksize-1 and i != 0):
+            l.append(padded[i-blocksize+1:i+1])
+    
+    for i in range(len(l)):
+        print("hex is " + str(ba.hexlify(l[i])))
+    
+    xor(IV, ba.hexlify(l[i]))
 
 def pad(message):
     
     padamount = 8 - len(message) % 8
     padbyte = chr(padamount)
-    print((message + padbyte * padamount).encode('utf-8'))
+    padded = (message + padbyte * padamount).encode('utf-8')
+    return padded
+
+def xor(xor_val, mess_block):
+    print()
+    print("xor of " + str(xor_val) + " and " + str(mess_block))
+    encrypt = [ord(chr(a)) ^ ord(chr(b)) for (a,b) in zip(xor_val, mess_block)]
+    print(encrypt)
+    #print(xor_val ^ mess_block)
 
 main()
