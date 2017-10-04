@@ -14,5 +14,5 @@ def readInputs(iname, kname, oname,vname):
 			oname = sys.argv[count+1]
 		elif(sys.argv[count] == "-v")
 			vname = sys.argv[count+1]
-		count = count+2;
+		count = count+2
 	return kname, iname, oname, vname
