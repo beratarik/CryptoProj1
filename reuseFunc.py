@@ -2,7 +2,7 @@
 import sys
 import binascii as ba
 from Crypto.Cipher import AES
-def readInputs(iname, kname, oname,vname):
+def readInputs():
 	
 	count = 0
 	while(count < len(sys.argv)):
