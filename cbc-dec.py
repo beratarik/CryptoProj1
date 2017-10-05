@@ -26,7 +26,8 @@ def main():
     l = []
     cciph = cipher.encode('utf-8')
     for i in range(len(cciph)):
-        l.append(cciph[i-blocksize+1:i+1])
+        if(i%blocksize == blocksize -1 and i != 0):
+            l.append(cciph[i-blocksize+1:i+1])
     
     for i in range(len(l)):
         print("hex is " + str(ba.hexlify(l[i])))
