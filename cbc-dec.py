@@ -24,13 +24,17 @@ def main():
     
     blocksize = 8
     l = []
-    
-    for i in range(len(cipher)):
-        l.append(cipher[i-blocksize+1:i+1])
+    cciph = cipher.encode('utf-8')
+    for i in range(len(cciph)):
+        l.append(cciph[i-blocksize+1:i+1])
     
     for i in range(len(l)):
         print("hex is " + str(ba.hexlify(l[i])))
     
-    decd = impAESdec(key, ba.hexlify(l[i]))
-
+    z = len(l)-1
+    while z >0:
+        i = z    
+        decd = impAESdec(key, ba.hexlify(l[i]))
+        m = impXOR(decd, ba.hexlify(l[i-1]))
+        #put m in ofile
 main()		
