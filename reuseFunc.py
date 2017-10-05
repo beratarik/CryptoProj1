@@ -2,19 +2,23 @@
 import sys, getopt
 import binascii as ba
 from Crypto.Cipher import AES
-def readInputs(argv):
+
+
+def readInputs(commandl):
+	#call with
+	print(commandl)
 	iname = ''
 	oname = ''
 	kname = ''
 	vname = ''
 	try:
-		opts, args = getopt.getopt(argv,"hi:o:",["ifile=","ofile="])
+		opts, args = getopt.getopt(commandl,"hi:o:k:v:",["kfile=", "vfile=","ifile=","ofile="])
 	except getopt.GetoptError:
-		#print 'test.py -i <inputfile> -o <outputfile>"'
+		print ('test.py -k <keyfile> -v <IVfile> -i <inputfile> -o <outputfile>"')
 		sys.exit(2)
 	for opt, arg in opts:
 		if opt == '-h':
-			print ('test.py -k <key> -v IV -i <inputfile> -o <outputfile>"')
+			print ('test.py -k <key> -v <IVfile> -i <inputfile> -o <outputfile>')
 			sys.exit()
 		elif opt in ("-i", "--ifile"):
 			iname = arg
@@ -25,18 +29,10 @@ def readInputs(argv):
 		elif opt in ("-v", "--vfile"):
 			vname = arg
 	print ('Input file is "', iname)
+	print ('key is "', kname)	
 	print ('Output file is "', oname)	
-	#count = 1
-	#while(cot < len(sys.argv)):
-	#	if(sys.argv[count] == '-i')
-	#		iname = sys.argv[count+1]
-	#	elif(sys.argv[count] == '-k'
-	#		kname = sys.argv[count+1]
-	#	elif(sys.argv[count] == '-o')
-	#		oname = sys.argv[count+1]
-	#	elif(sys.argv[count] == '-v')
-	#		vname = sys.argv[count+1]
-	#	count = count+2;
+	print ('IV file is "', vname)	
+	
 	return kname, iname, oname, vname
 
 def impAESenc( key, inputString ):
