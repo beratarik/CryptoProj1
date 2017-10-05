@@ -46,7 +46,7 @@ def impAESdec(key, inputString):
 	enc = binascii.unhexlify(enc)
 	cipher = AES.AESCipher(key[:32], AES.MODE_ECB)
 	enc = cipher.decrypt(enc)
-	return enc.decod('utf-8')
+	return enc.decode('utf-8')
 
 def impXOR(xor_val, mess_block):
 	c = int(xor_val, 16) ^ int(mess_block,16)
