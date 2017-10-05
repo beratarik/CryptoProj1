@@ -49,10 +49,14 @@ def pad(message):
     return padded
 
 def xor(xor_val, mess_block):
+    c = ''
     print()
     print("xor of " + str(xor_val) + " and " + str(mess_block))
     encrypt = [ord(chr(a)) ^ ord(chr(b)) for (a,b) in zip(xor_val, mess_block)]
-    print(encrypt)
+    for i in range(len(encrypt)):
+        c += str(encrypt[i])
+    #c = ''.join(str(encrypt))
+    print(c)
     #print(xor_val ^ mess_block)
 
 main()
