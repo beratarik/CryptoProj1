@@ -2,18 +2,21 @@ import sys
 import binascii as ba
 from Crypto.Cipher import AES
 from Crypto import Random
-
+from reuseFunc import impXOR
+from reuseFunc import readInputs
 def main():
+    kname, iname, oname, vname = readInputs(sys.argv[1:])
 
-    kname = sys.argv[1]
-    iname = sys.argv[2]
-    oname = sys.argv[3]
+    #print("test")
+    #kname = sys.argv[1]
+    #iname = sys.argv[2]
+    #oname = sys.argv[3]
 
     blocksize = 8
     l = []
 
     if(len(sys.argv) == 5):
-        ivname = sys.argv[4]
+     #   ivname = sys.argv[4]
         ivfile = open(ivname, 'r')
 
     kfile = open(kname, 'r')
@@ -49,14 +52,22 @@ def pad(message):
     return padded
 
 def xor(xor_val, mess_block):
-    c = ''
-    print()
-    print("xor of " + str(xor_val) + " and " + str(mess_block))
-    encrypt = [ord(chr(a)) ^ ord(chr(b)) for (a,b) in zip(xor_val, mess_block)]
-    for i in range(len(encrypt)):
-        c += str(encrypt[i])
+    c = impXOR(xor_val, mess_block)
+    #c = int(xor_val, 16) ^ int(mess_block, 16)
+    #c=''
+    #print()
+    #print("xor of " + str(xor_val) + " and " + str(mess_block))
+    
+    #encrypt = [ord(chr(a)) ^ ord(chr(b)) for (a,b) in zip(xor_val, mess_block)]
+    #for i in range(len(encrypt)):
+     #   c += str(encrypt[i])
+    
     #c = ''.join(str(encrypt))
-    print(c)
+    #print(c)
     #print(xor_val ^ mess_block)
+    #hex(c)
+    #print()
+    #print(hex(c))
+    return c
 
 main()
