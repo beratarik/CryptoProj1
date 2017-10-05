@@ -5,7 +5,8 @@ from Crypto.Cipher import AES
 
 
 def readInputs(commandl):
-	#call with
+	#call with: kname, iname, oname, vname = readInputs(sys.argv[1:])
+
 	print(commandl)
 	iname = ''
 	oname = ''
@@ -40,13 +41,13 @@ def impAESenc( key, inputString ):
 	
 	cipher = AES.AESCipher(key[:32], AES.MODE_ECB)
 	ctext = cipher.encrypt(inputString)
-	return binascii.hexlify(bytearray(ctext)).decode('utf-8')
+	return ba.hexlify(bytearray(ctext)).decode('utf-8')
 	
 def impAESdec(key, inputString):
-	enc = binascii.unhexlify(enc)
+	enc = ba.unhexlify(inputString)
 	cipher = AES.AESCipher(key[:32], AES.MODE_ECB)
 	enc = cipher.decrypt(enc)
-	return enc.decode('utf-8')
+	return enc.decod('utf-8')
 
 def impXOR(xor_val, mess_block):
 	c = int(xor_val, 16) ^ int(mess_block,16)
