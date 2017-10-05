@@ -51,3 +51,11 @@ def impAESdec(key, inputString):
 	cipher = AES.AESCipher(key[:32], AES.MODE_ECB)
 	enc = cipher.decrypt(enc)
 	return enc.decod('utf-8')
+
+def impXOR(xor_val, mess_block):
+	c = int(xor_val, 16) ^ int(mess_block,16)
+	print("xor of " + str(xor_val) + " and " + str(mess_block))
+	print(c)
+	print()
+	print(hex(c))
+	return c
