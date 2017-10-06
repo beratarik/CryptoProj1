@@ -38,8 +38,11 @@ def main():
     
     for i in range(len(l)):
         print("hex is " + str(ba.hexlify(l[i])))
-    
-    xor(IV, ba.hexlify(l[i]))
+
+    c = xor(IV, ba.hexlify(l[0]))
+    cipher = encrypt(c, l[0])
+    print(c)
+    print(cipher)
 
 def pad(message):
     
@@ -49,14 +52,21 @@ def pad(message):
     return padded
 
 def xor(xor_val, mess_block):
-    c = ''
-    print()
     print("xor of " + str(xor_val) + " and " + str(mess_block))
-    encrypt = [ord(chr(a)) ^ ord(chr(b)) for (a,b) in zip(xor_val, mess_block)]
-    for i in range(len(encrypt)):
-        c += str(encrypt[i])
+    #encrypt = [ord(chr(a)) ^ ord(chr(b)) for (a,b) in zip(xor_val, mess_block)]
+    encrypt = int(xor_val, 16) ^ int(mess_block, 16)
+    #for i in range(len(encrypt)):
+    #    c += str(encrypt[i])
     #c = ''.join(str(encrypt))
-    print(c)
-    #print(xor_val ^ mess_block)
+    return hex(encrypt)[2:]
+
+def encrypt(key, message):
+    cipher = AES.AESCipher(key, AES.MODE_ECB)
+    ciphertext = cipher.encrypt(message)
+    return ba.hexlify(bytearray(ciphertext)).decode('utf-8')
+
+def createCipher(message):
+    ciphertext += message;
+    return ciphertext
 
 main()
