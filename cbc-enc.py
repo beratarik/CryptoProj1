@@ -24,6 +24,9 @@ def main():
     message = message[:-1]
     #message = message.encode('utf-8')
 
+    key = kfile.read()
+    key = key[:-1]
+
     rndfile = Random.new()
     IV = rndfile.read(8)
     IV = ba.hexlify(IV)
@@ -38,11 +41,18 @@ def main():
     
     for i in range(len(l)):
         print("hex is " + str(ba.hexlify(l[i])))
+    ciphertext = ''
 
     c = xor(IV, ba.hexlify(l[0]))
-    cipher = encrypt(c, l[0])
-    print(c)
-    print(cipher)
+    cipher = encrypt(key, c)
+    ciphertext = createCipher(ciphertext, cipher)
+
+    for i in range(1,len(l)):
+        c = xor(ba.hexlify(bytes(cipher, 'utf-8')), ba.hexlify(l[i]))
+        cipher = encrypt(key, c)
+        ciphertext = createCipher(ciphertext, cipher)
+
+    print(ciphertext)
 
 def pad(message):
     
@@ -61,11 +71,11 @@ def xor(xor_val, mess_block):
     return hex(encrypt)[2:]
 
 def encrypt(key, message):
-    cipher = AES.AESCipher(key, AES.MODE_ECB)
+    cipher = AES.AESCipher(key[:32], AES.MODE_ECB)
     ciphertext = cipher.encrypt(message)
     return ba.hexlify(bytearray(ciphertext)).decode('utf-8')
 
-def createCipher(message):
+def createCipher(ciphertext, message):
     ciphertext += message;
     return ciphertext
 
