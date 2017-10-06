@@ -4,6 +4,7 @@ from Crypto.Cipher import AES
 from Crypto import Random
 from reuseFunc import impXOR
 from reuseFunc import readInputs
+from reuseFunc import impAESenc
 def main():
     kname, iname, oname, vname = readInputs(sys.argv[1:])
 
@@ -12,7 +13,7 @@ def main():
     #iname = sys.argv[2]
     #oname = sys.argv[3]
 
-    blocksize = 8
+    blocksize = 16
     l = []
 
     if(len(sys.argv) == 5):
@@ -26,9 +27,10 @@ def main():
     message = ifile.read()
     message = message[:-1]
     #message = message.encode('utf-8')
-
+    key = kfile.read()
+    key = key[:-1]
     rndfile = Random.new()
-    IV = rndfile.read(8)
+    IV = rndfile.read(16)
     IV = ba.hexlify(IV)
     print("IV is  " + str(IV))
     #print("Unpadded message is " + message)
@@ -42,8 +44,11 @@ def main():
     for i in range(len(l)):
         print("hex is " + str(ba.hexlify(l[i])))
     
-    xor(IV, ba.hexlify(l[i]))
-
+    c = xor(IV, ba.hexlify(l[i]))
+    c = hex(c)
+    c= c[2:]
+    ciph = impAESenc(key, c)
+    
 def pad(message):
     
     padamount = 8 - len(message) % 8
