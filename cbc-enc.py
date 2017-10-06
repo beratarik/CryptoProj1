@@ -13,7 +13,7 @@ def main():
     #iname = sys.argv[2]
     #oname = sys.argv[3]
 
-    blocksize = 16
+    blocksize = 8
     l = []
 
     if(len(sys.argv) == 5):
@@ -29,8 +29,9 @@ def main():
     #message = message.encode('utf-8')
     key = kfile.read()
     key = key[:-1]
+    
     rndfile = Random.new()
-    IV = rndfile.read(16)
+    IV = rndfile.read(8)
     IV = ba.hexlify(IV)
     print("IV is  " + str(IV))
     #print("Unpadded message is " + message)
