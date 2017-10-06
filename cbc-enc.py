@@ -47,8 +47,9 @@ def main():
     c = xor(IV, ba.hexlify(l[i]))
     c = hex(c)
     c= c[2:]
+    print( "key is " + str(key) + " c is " + str(c))
     ciph = impAESenc(key, c)
-    
+    print(str(ciph)) 
 def pad(message):
     
     padamount = 8 - len(message) % 8
