@@ -7,7 +7,7 @@ from Crypto.Cipher import AES
 def readInputs(commandl):
 	#call with: kname, iname, oname, vname = readInputs(sys.argv[1:])
 
-	print(commandl)
+#	print(commandl)
 	iname = ''
 	oname = ''
 	kname = ''
@@ -15,7 +15,7 @@ def readInputs(commandl):
 	try:
 		opts, args = getopt.getopt(commandl,"hi:o:k:v:",["kfile=", "vfile=","ifile=","ofile="])
 	except getopt.GetoptError:
-		print ('test.py -k <keyfile> -v <IVfile> -i <inputfile> -o <outputfile>"')
+	#	print ('test.py -k <keyfile> -v <IVfile> -i <inputfile> -o <outputfile>"')
 		sys.exit(2)
 	for opt, arg in opts:
 		if opt == '-h':
@@ -29,30 +29,20 @@ def readInputs(commandl):
 			kname = arg
 		elif opt in ("-v", "--vfile"):
 			vname = arg
-	print ('Input file is "', iname)
-	print ('key is "', kname)	
-	print ('Output file is "', oname)	
-	print ('IV file is "', vname)	
+#	print ('Input file is "', iname)
+#	print ('key is "', kname)	
+#	print ('Output file is "', oname)	
+#	print ('IV file is "', vname)	
 	
+	if(kname ==''):
+		print("you have to inlude a key file")
+		exit(1)
+	if(iname ==''):
+		print("you have to include an input file")
+		exit(1)
+	if(oname==''):
+		print("you have to include an output file")
+		exit(1);	
 	return kname, iname, oname, vname
 
-def impAESenc( key, inputString ):
-	#inputstring should be 8 bytes
-	
-	cipher = AES.AESCipher(key[:32], AES.MODE_ECB)
-	ctext = cipher.encrypt(inputString)
-	return ba.hexlify(bytearray(ctext)).decode('utf-8')
-	
-def impAESdec(key, inputString):
-	enc = ba.unhexlify(inputString)
-	cipher = AES.AESCipher(key[:32], AES.MODE_ECB)
-	enc = cipher.decrypt(enc)
-	return enc.decod('utf-8')
 
-def impXOR(xor_val, mess_block):
-	c = int(xor_val, 16) ^ int(mess_block,16)
-	print("xor of " + str(xor_val) + " and " + str(mess_block))
-	print(c)
-	print()
-	print(hex(c))
-	return c
