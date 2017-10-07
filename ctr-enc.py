@@ -13,10 +13,10 @@ def main():
     blocksize = 8
     l = []
 
-    if(len(sys.argv) == 5):
-        ivname = sys.argv[4]
-        ivfile = open(ivname, 'r')
-
+    isIV = 0
+    if(vname != ''):
+        vfile = open(vname, 'r')
+        isIV = 1
     kfile = open(kname, 'r')
     ifile = open(iname, 'r')
     ofile = open(oname, 'w')
@@ -29,11 +29,17 @@ def main():
     key = key[:-1]
     ciphertext = ''
 
-    rndfile = Random.new()
-    IV = rndfile.read(8)
-    ran = random.randrange(10**80)
-    myhex = "%64x" %ran
-    myhex = myhex[:16]
+    if(isIV == 0):
+        rndfile = Random.new()
+        IV = rndfile.read(8)
+        ran = random.randrange(10**80)
+        myhex = "%64x" %ran
+        myhex = myhex[:16]
+    else:
+        myhex = vfile.read()
+        myhex = myhex[:-1]
+        myhex = myhex[:16]
+
     ctr = myhex
     myhex = bytes(myhex, 'utf-8')
 
