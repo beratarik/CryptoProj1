@@ -10,7 +10,7 @@ def main():
 
     kname, iname, oname, vname = readInputs(sys.argv[1:])
 
-    blocksize = 8
+    blocksize = 32
     l = []
 
     isIV = 0
@@ -58,9 +58,9 @@ def main():
 
 def encrypt(key, ctr, message, output):
     cipher = AES.AESCipher(key[:32], AES.MODE_ECB)
-    aescipher = cipher.encrypt(bytes(hex(ctr)[2:], 'utf-8'))
+    aescipher = cipher.decrypt(bytes(hex(ctr)[2:], 'utf-8'))
 
-    c = strxor.strxor(aescipher, ba.hexlify(message))
+    c = strxor.strxor(aescipher, ba.unhexlify(message))
     #print(ba.hexlify(c))
     output.put(ba.hexlify(c))
 
@@ -69,3 +69,4 @@ def createCipher(ciphertext, message):
     return ciphertext
 
 main()
+
