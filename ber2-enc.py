@@ -4,11 +4,12 @@ from Crypto.Cipher import AES
 from Crypto import Random
 from Crypto.Util import strxor
 import random
+from reuseFunc import readInputs
 def main():
-
-    kname = sys.argv[1]
-    iname = sys.argv[2]
-    oname = sys.argv[3]
+    kname, iname, oname, vname = readInputs(sys.argv[1:])
+    #kname = sys.argv[1]
+    #iname = sys.argv[2]
+    #oname = sys.argv[3]
 
     blocksize = 8
     l = []
@@ -19,7 +20,7 @@ def main():
 
     kfile = open(kname, 'r')
     ifile = open(iname, 'r')
-    oname = open(oname, 'w')
+    ofile = open(oname, 'w')
 
     message = ifile.read()
     message = message[:-1]
@@ -28,11 +29,13 @@ def main():
     key = kfile.read()
     key = key[:-1]
 
+    ciphertext =''
     rndfile = Random.new()
     IV = rndfile.read(8)
     ran = random.randrange(10**80)
     myhex = "%64x" %ran
     myhex = myhex[:16]
+    ciphertext += myhex
     myhex = bytes(myhex, 'utf-8')
     print("myhex is " + str(myhex))
     print("IV is " + str(IV))
@@ -49,7 +52,7 @@ def main():
     
     for i in range(len(l)):
         print("hex is " + str((l[i])))
-    ciphertext = ''
+    
     print("l is " + str(ba.hexlify(l[0]))) 
     c = strxor.strxor(myhex, ba.hexlify(l[0]))
     h = strxor.strxor(myhex, c)
@@ -68,6 +71,7 @@ def main():
         ciphertext = createCipher(ciphertext, cipher)
 
     print(ciphertext)
+    ofile.write(ciphertext)
 
 def pad(message):
     
