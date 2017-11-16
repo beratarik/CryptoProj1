@@ -19,10 +19,10 @@ def main():
     ofile = open(oname, 'w')
 
     message = ifile.read()
-    message = message[:-1]
+    message = message.rstrip()
 
     key = kfile.read()
-    key = key[:-1]
+    key = key.rstrip()
 
     ciphertext =''
     if isIV == 0:
@@ -31,7 +31,7 @@ def main():
         myhex = myhex[:16]
     else:
         myhex = vfile.read()
-        myhex = myhex[:-1]
+        myhex = myhex.rstrip()
         myhex = myhex[:16]
     ciphertext += myhex
     myhex = bytes(myhex, 'utf-8')
@@ -45,13 +45,17 @@ def main():
     #print("hex mesage " + str(ba.hexlify(padded)))
     for i in range(len(padded)):
         if(i%blocksize == blocksize-1 and i != 0):
+            #print(padded[i-blocksize+1:i+1])
             l.append(padded[i-blocksize+1:i+1])
     
     #for i in range(len(l)):
         #print("hex is " + str((l[i])))
     
     #print("l is " + str(ba.hexlify(l[0]))) 
+    #print()
+    #print(ciphertext)
     c = strxor.strxor(myhex, ba.hexlify(l[0]))
+    #print(c)
     #h = strxor.strxor(myhex, c)
     #print("h is " +str((h)))
     #c = xor(myhex, (l[0]))

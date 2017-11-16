@@ -13,17 +13,23 @@ def main():
 
 	
     cipher = ifile.read()
-    cipher = cipher[:-1]
+    cipher = cipher.rstrip()
+    print(cipher)
     
     key = kfile.read()
-    key = key[:-1]
+    key = key.rstrip()
+    print(key)
      
     blocksize = 32
     l = []
     
+    print(len(cipher))
     for i in range(len(cipher)):
         if(i%blocksize == blocksize -1 and i != 0):
+            #this is not correct
+            print(cipher[i-blocksize+1:i+1])
             l.append(cipher[i-blocksize+1:i+1])
+    print(i)
     
     for i in range(len(l)):
         print("hex is " + str(l[i]))
