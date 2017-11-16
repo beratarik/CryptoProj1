@@ -62,6 +62,7 @@ def main():
     #print("C is " +str(ba.hexlify(c)))
     
     cipher = encrypt(key, c)
+    print("cipher is " + str(cipher))
     ciphertext = createCipher(ciphertext, cipher)
     #print(ciphertext)
     for i in range(1,len(l)):
@@ -69,6 +70,7 @@ def main():
         c = strxor.strxor(ba.unhexlify(cipher),ba.hexlify(l[i]))
         #print("Xor res is " + str(c))
         cipher = encrypt(key, c)
+        print("cipher is " + str(cipher))
         ciphertext = createCipher(ciphertext, cipher)
 
     #print(ciphertext)

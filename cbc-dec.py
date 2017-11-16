@@ -22,7 +22,9 @@ def main():
      
     blocksize = 32
     l = []
-    
+    IV = cipher[:16]
+    print("IV is " + str(IV))
+    cipher = cipher[16:]
     print(len(cipher))
     for i in range(len(cipher)):
         if(i%blocksize == blocksize -1 and i != 0):
