@@ -58,7 +58,12 @@ def main():
     c = strxor.strxor(IV, ciph)
     message = str(c.decode('utf-8'))+message
     print(message)
+    paddingamt = ord((message[::-1])[0])
+    print("Padding amount is", paddingamt)
+    message = message[:(len(message)-paddingamt)]
+    #print(message)
     ofile.write(message)
+
 def decrypt(key,cipher):
    # cipher = ba.unhexlify(cipher) 
     ciph = AES.AESCipher(key[:32], AES.MODE_ECB)
