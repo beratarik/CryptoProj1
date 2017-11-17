@@ -14,17 +14,24 @@ def main():
 	
     cipher = ifile.read()
     cipher = cipher.rstrip()
-    print(cipher)
+    print("cipher is " + str(cipher))
     
     key = kfile.read()
     key = key.rstrip()
-    print(key)
+    print("key is " + str(key))
      
-    blocksize = 32
+    blocksize = 16
     l = []
+    print("cipher size is " + str(len(cipher)))
+    cipher = bytes(cipher,'utf-8')
+    #cipher = cipher[2:]
+    #cipher = cipher[::-1]
+    print("cipher is "+str(cipher))
+    print("with size "+str(len(cipher)))
     IV = cipher[:16]
     print("IV is " + str(IV))
     cipher = cipher[16:]
+
     print(len(cipher))
     for i in range(len(cipher)):
         if(i%blocksize == blocksize -1 and i != 0):
@@ -34,15 +41,19 @@ def main():
     print(i)
     
     for i in range(len(l)):
+        print(i)
         print("hex is " + str(l[i]))
     message = ''
     for i in range(len(l)-1, 0, -1):
-        print("i unhex is " + str(ba.unhexlify(l[i])))
-        ciph = decrypt(key, ba.unhexlify(l[i]))
-        print("ciph is " + str(ba.hexlify(ciph)) +" li-1 is " + str(ba.unhexlify(l[i-1])))
-        c = strxor.strxor(ba.unhexlify(l[i-1]), (ciph))
-        c = c.decode('utf-8')
-        message = c+ message
+        print("i unhex is " + str((l[i])))
+        l[i] = bytes(l[i], 'utf-8')
+        ciph = decrypt(key,(l[i]))
+        print("ciph is " + str((ciph)) +" li-1 is " + str((l[i-1])))
+        #ciph = str(ciph)
+        c = strxor.strxor(bytes(l[i-1],'utf-8'), (ciph))
+        #c = c.decode('utf-8')
+        print("c is " + str(c))
+        message = str(c)+ message
     print(message)
 def decrypt(key,cipher):
    # cipher = ba.unhexlify(cipher) 
