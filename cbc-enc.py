@@ -23,7 +23,7 @@ def main():
 
     key = kfile.read()
     key = key.rstrip()
-    print("key is " + str(key))
+    #print("key is " + str(key))
     ciphertext =''
     if isIV == 0:
         ran = random.randrange(10**80)
@@ -34,6 +34,7 @@ def main():
         myhex = myhex.rstrip()
         myhex = myhex[:16]
     #ciphertext += myhex
+    #print("myhex prebytes is " + str(myhex))
     myhex = bytes(myhex, 'utf-8')
     ciphertext = b''.join([myhex])
     #print("myhex is " + str(myhex))
@@ -60,34 +61,34 @@ def main():
     #z.extend(l[0].encode())
     #print("l 0 is  encoded z " + str(z))
     #c = strxor.strxor(str(myhex), str(l[0]))
-    print("myhex is " + str(myhex))
-    print("l0 is " + str(l[0]))
-    print("length myhex is " + str(len(myhex)))
-    print("length l0 is " + str(len(l[0])))
+    #print("myhex is " + str(myhex))
+    #print("l0 is " + str(l[0]))
+    #print("length myhex is " + str(len(myhex)))
+    #print("length l0 is " + str(len(l[0])))
     c = strxor.strxor(myhex, (l[0]))
-    print(c)
+    #print(c)
     #h = strxor.strxor(myhex, c)
     #print("h is " +str((h)))
     #c = xor(myhex, (l[0]))
     #print("C is " +str(ba.hexlify(c)))
     
     cipher = encrypt(key, c)
-    print("cipher is " + str(cipher))
-    print("cipher len is " + str(len(cipher)))
+    #print("cipher is " + str(cipher))
+    #print("cipher len is " + str(len(cipher)))
     #cipher = str(cipher)
     ciphertext = createCipher(ciphertext, (cipher))
-    print(ciphertext)
+    #print(ciphertext)
     for i in range(1,len(l)):
-        print("xor of " + str(cipher) + " and " + str(l[i]))
+        #print("xor of " + str(cipher) + " and " + str(l[i]))
         c = strxor.strxor(cipher,(l[i]))
         #test = str(c.decode('utf-8'))
         #print("test", test)
-        print("Xor res is " + str(c))
+        #print("Xor res is " + str(c))
         cipher = encrypt(key, c)
-        print("cipher is " + str(cipher))
+        #print("cipher is " + str(cipher))
         ciphertext = createCipher(ciphertext, (cipher))
 
-    print(ciphertext)
+    #print(ciphertext)
     
     ofile.write((ciphertext))
 
