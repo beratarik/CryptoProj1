@@ -8,7 +8,7 @@ def main():
     kname, iname, oname, vname = readInputs(sys.argv[1:])
 	
     kfile = open(kname, 'r')
-    ifile = open(iname, 'r')
+    ifile = open(iname, 'rb')
     ofile = open(oname, 'w')
 
 	
@@ -23,7 +23,7 @@ def main():
     blocksize = 16
     l = []
     print("cipher size is " + str(len(cipher)))
-    cipher = bytes(cipher,'utf-8')
+    #cipher = bytes(cipher,'utf-8')
     #cipher = cipher[2:]
     #cipher = cipher[::-1]
     print("cipher is "+str(cipher))
@@ -46,15 +46,19 @@ def main():
     message = ''
     for i in range(len(l)-1, 0, -1):
         print("i unhex is " + str((l[i])))
-        l[i] = bytes(l[i], 'utf-8')
+        #l[i] = bytes(l[i], 'utf-8')
         ciph = decrypt(key,(l[i]))
         print("ciph is " + str((ciph)) +" li-1 is " + str((l[i-1])))
         #ciph = str(ciph)
-        c = strxor.strxor(bytes(l[i-1],'utf-8'), (ciph))
+        c = strxor.strxor(l[i-1], (ciph))
         #c = c.decode('utf-8')
         print("c is " + str(c))
-        message = str(c)+ message
+        message = str(c.decode('utf-8'))+ message
+    ciph = decrypt(key,l[0])
+    c = strxor.strxor(IV, ciph)
+    message = str(c.decode('utf-8'))+message
     print(message)
+    ofile.write(message)
 def decrypt(key,cipher):
    # cipher = ba.unhexlify(cipher) 
     ciph = AES.AESCipher(key[:32], AES.MODE_ECB)

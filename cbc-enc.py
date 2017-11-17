@@ -16,7 +16,7 @@ def main():
         isIV = 1
     kfile = open(kname, 'r')
     ifile = open(iname, 'r')
-    ofile = open(oname, 'w')
+    ofile = open(oname, 'wb')
 
     message = ifile.read()
     message = message.rstrip()
@@ -88,7 +88,8 @@ def main():
         ciphertext = createCipher(ciphertext, (cipher))
 
     print(ciphertext)
-    ofile.write(str(ciphertext))
+    
+    ofile.write((ciphertext))
 
 def pad(message):
     
